@@ -12,15 +12,17 @@ En el método update la variable es let porque debo redefinirla más adelante. L
 
 */
 
-const productos = require("../models/productos");
+
 const producto=require("../models/productos") //Importo el modelo de productos. Como es mongoose, JS puede importarlo
+const fetch =(url)=>import('node-fetch').then(({default:fetch})=>fetch(url));
+
 
 //Ver lista de productos
 exports.getProducts=async(req,res,next) =>{
     const products = await producto.find ();
     res.status(200).json({
         success:true,
-        cantidad: productos.length,
+        cantidad: producto.length,
         products
     })
 }
@@ -94,3 +96,26 @@ exports.deleteProduct=async (req, res, next)=>{
     })
 
 }
+
+
+/*
+//FETCH
+
+//Ver todos los productos usando FETCH
+function verProductos(){
+    fetch('http://localhost:4000/api/productos')
+    .then(res=>res.json())
+    .then(res=>console.log(res))
+    .catch(err=>console.error(err))} 
+//verProductos(); 
+
+
+//Ver por id
+function verProductoPorID(id){
+    fetch('http://localhost:4000/api/producto/'+id)
+    .then(res=>res.json())
+    .then(res=>console.log(res))
+    .catch(err=>console.error(err))}
+//verProductoPorID('6357d2ca62fb9f6e4d013518'); //Probamos el metodo con un id
+
+*/
