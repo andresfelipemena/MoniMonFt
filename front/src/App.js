@@ -1,15 +1,17 @@
 import './App.css';
 import React from 'react';
+import Header from './components/layout/Header';
+import { Footer } from './components/layout/Footer';
+import { Home } from './components/Home';
+
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>
-          Consultorio de fisioterapia.
-        </h1>
-        <img src="./logo192.png" alt="Aquí va el logo" />
-      </header>
+      <Header />
+      <Home/>
+      <Footer/>
     </div>
   );
 }
