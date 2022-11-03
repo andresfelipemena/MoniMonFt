@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
+import MetaData from './layout/MetaData';
 
 export const Home = () => {
   return (
     <Fragment>
         &nbsp;&nbsp;
+        <MetaData title='Fisioterapia, bienestar y entrenamiento'></MetaData>
         <h3 id="encabezado" className='text-center'>Selecciona la categoría</h3>
         <section id="productos" className='container mt-1'>
           <div className='row'>
@@ -20,7 +22,7 @@ export const Home = () => {
                   </div>
                   <span id="no_opiniones">5 reviews</span>
                 </div>
-                <p className='card-text'>$80.000</p> <a href="http://localhost:3000" id="ver_producto" className='btn btn-block'> </a>
+                <p className='card-text'>$80.000</p> <a href="http://localhost:3000" id="view_btn" className='btn btn-block'>Ver productos</a>
               </div>
             </div>
 
@@ -36,7 +38,7 @@ export const Home = () => {
                   </div>
                   <span id="no_opiniones">3 reviews</span>
                 </div>
-                <p className='card-text'>$100.000</p> <a href="http://localhost:3000" id="ver_producto" className='btn btn-block'> </a>
+                <p className='card-text'>$100.000</p> <a href="http://localhost:3000" id="view_btn" className='btn btn-block'>Ver productos</a>
               </div>
             </div>
 
@@ -52,7 +54,7 @@ export const Home = () => {
                   </div>
                   <span id="no_opiniones">3 reviews</span>
                 </div>
-                <p className='card-text'>$100.000</p> <a href="http://localhost:3000" id="ver_producto" className='btn btn-block'> </a>
+                <p className='card-text'>$100.000</p> <a href="http://localhost:3000" id="view_btn" className='btn btn-block'>Ver productos</a>
               </div>
             </div>
 
