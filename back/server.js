@@ -5,14 +5,18 @@ COSAS IMPORTANTES:
 */
 
 
-const app= require("./app"); //Llamar a app (que es el nombre que le pusimos a express)
-const connectDatabase = require("./config/database");
+const app = require("./app"); //Llamar a app (que es el nombre que le pusimos a express)
+
 
 const dotenv=require("dotenv"); //Llamar a dotenv que es una de las cosas que importamos
 dotenv.config({path: 'back/config/config.env'})
+const connectDatabase = require("./config/database");
+
+
 
 //Configurar base de datos
 connectDatabase();
+
 
 //Declarar el server
 const server=app.listen(process.env.PORT, ()=>{

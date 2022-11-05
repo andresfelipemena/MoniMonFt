@@ -1,9 +1,9 @@
 import { ALL_PRODUCTS_REQUEST, 
-        ALL_PRODUCTS_SUCCES, 
+        ALL_PRODUCTS_SUCCESS, 
         ALL_PRODUCTS_FAIL, 
         CLEAR_ERRORS } from "../constants/productConstants";  
 
-export const productReducer = (state ={products:[]}, action)=>{
+export const productsReducer = (state ={products:[]}, action)=>{
     switch(action.type){
         case ALL_PRODUCTS_REQUEST:
             return {
@@ -11,7 +11,7 @@ export const productReducer = (state ={products:[]}, action)=>{
                 products: []
             }
 
-        case ALL_PRODUCTS_SUCCES:
+        case ALL_PRODUCTS_SUCCESS:
             return {
                 loading: false,
                 products: action.payload.products,
