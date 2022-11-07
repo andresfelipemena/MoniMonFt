@@ -13,51 +13,45 @@ En el método update la variable es let porque debo redefinirla más adelante. L
 */
 
 
-const producto=require("../models/productos") //Importo el modelo de productos. Como es mongoose, JS puede importarlo
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const producto=require("../models/productos"); //Importo el modelo de productos. Como es mongoose, JS puede importarlo
+const ErrorHandler = require("../utils/errorHandler");
 const fetch =(url)=>import('node-fetch').then(({default:fetch})=>fetch(url));
 
 
 //Ver lista de productos
-exports.getProducts=async(req,res,next) =>{
+exports.getProducts= catchAsyncErrors ( async(req,res,next) =>{
     const productos = await producto.find ();
     if (!productos){
-        return res.status(404).json({
-            success:false,
-            error:true
-        })
-    }
+        return next(new ErrorHandler("Información no encontrada", 404))
+        }
+    
     res.status(200).json({
         success:true,
         cantidad: producto.length,
         productos
     })
-}
+})
 
 //Consultar producto por id
-exports.getProductById=async(req,res,next) =>{
+exports.getProductById= catchAsyncErrors (async(req,res,next) =>{
     const productById = await producto.findById (req.params.id);
     if (!productById){
-        return res.status(404).json({
-            success: false,
-            mensaje: "El producto no existe",
-            error: true
-        })
-    }
+        return next(new ErrorHandler("Producto no encontrado", 404))
+        }
+    
     res.status(200).json({
         success:true,
         mensaje: "Esta es la información de tu producto: ",
         productById
     })
-}
+})
 
 //Update de un producto
-exports.updateProduct=async (req, res, next)=>{
+exports.updateProduct= catchAsyncErrors ( async (req, res, next)=>{
     let updateProduct = await producto.findById (req.params.id);
     if (!updateProduct){
-        return res.status(404).json({
-            success: false,
-            mensaje: "El producto no existe"
-        })
+        return next(new ErrorHandler("Producto no encontrado", 404))
     }
 
     updateProduct = await producto.findByIdAndUpdate (req.params.id, req.body, {
@@ -72,27 +66,24 @@ exports.updateProduct=async (req, res, next)=>{
         updateProduct
     })
 
-}
+})
 
 
 //Crear un nuevo producto /api/productos
-exports.newProduct=async(req, res, next) => {
+exports.newProduct= catchAsyncErrors ( async(req, res, next) => {
     const product = await producto.create (req.body);
     res.status(201).json({
         success: true,
         product
     })
-}
+})
 
 
 //Eliminar un producto
-exports.deleteProduct=async (req, res, next)=>{
+exports.deleteProduct= catchAsyncErrors( async (req, res, next)=>{
     const deleteProduct = await producto.findById (req.params.id);
     if (!deleteProduct){
-       return res.status(404).json({
-            success: false,
-            mensaje: "No se puede eliminar, el producto no existe"
-        })
+        return next(new ErrorHandler("Producto no encontrado", 404))
     }
 
     await deleteProduct.remove ();
@@ -102,7 +93,7 @@ exports.deleteProduct=async (req, res, next)=>{
         deleteProduct
     })
 
-}
+})
 
 
 /*
