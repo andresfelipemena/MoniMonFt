@@ -7,26 +7,18 @@ de la entidad.
 
 */
 
-//Creo que estas dos líneas deben ir siempre
 const express=require("express")
-const router=express.Router(); //Con esto enrutamos
+const router=express.Router();
 
-//Traer los métodos creados en el controller - también una línea que va siempre
-const {getProducts, newProduct, getProductById, updateProduct, deleteProduct} = require("../controllers/productsController")
+const {getProducts, newProduct, getProductById, updateProduct, deleteProduct} = require("../controllers/productsController"); //Traemos la respuesta json desde el controlador
+const { isAuthenticatedUser , authorizeRoles} = require("../middleware/auth");
 
-//Ruta para ver la lista de productos
-router.route('/productos').get(getProducts); //Definimos la ruta desde la cual queremos ver el getProducts
+//Probemos autenticación
+router.route('/productos').get(isAuthenticatedUser, authorizeRoles("admin"), getProducts)  //Establecemos desde que ruta queremos ver el getProducts
+router.route('/producto/nuevo').post(newProduct); //establecemos la ruta
+router.route('/producto/:id').get(getProductById); //Ruta para consultar por id
+router.route('/producto/:id').put(updateProduct);//Creacion de la ruta de actualizacion
+router.route('/producto/:id').delete(deleteProduct); //Creacion de la ruta de eliminacion por id
+ 
 
-//Ruta para ver un producto por ID
-router.route('/producto/:id').get(getProductById);
-
-//Ruta para actualizar un produxto
-router.route('/producto/update/:id').put(updateProduct);
-
-//Ruta para crear nuevo producto
-router.route('/producto/nuevo').post(newProduct);
-
-//Ruta para borrar nuevo producto
-router.route('/producto/delete/:id').delete(deleteProduct);
-
-module.exports=router; 
+module.exports=router;

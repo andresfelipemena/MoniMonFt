@@ -1,22 +1,20 @@
-const express=require("express"); //Esto permite usar express en este proyecto
-const app =express(); //Esto solo le está poniendo el nombre app a la variable express de la línea anterior
-const errorMiddleware= require("./middleware/errors")
+const express = require("express");
+const app = express();
+const errorMiddleware = require("./middleware/errors")
+const cookieParser = require("cookie-parser")
 
-
-//Para que mi app entienda y use formato json
+//Uso de constantes importadas
 app.use(express.json());
+app.use(cookieParser());
 
-//Para que mi app importe rutas
-const productos=require("./routes/products")
+//Importar rutas
+const productos = require("./routes/products")
+const usuarios = require("./routes/auth")
 
-
-//Ruta del navegador
-app.use('/api', productos)
-const usuarios=require("./routes/auth")
+app.use('/api', productos) //Sujeto a decision (ruta del navegador)
+app.use('/api', usuarios)
 
 //MiddleWares para manejar errores
 app.use(errorMiddleware)
-app.use('/api',usuarios)
 
-
-module.exports=app //Así hago que pueda usar la variable app(que es como nombré a express) en cualquier parte
+module.exports = app //Así hago que pueda usar la variable app(que es como nombré a express) en cualquier parte
